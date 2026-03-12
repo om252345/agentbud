@@ -132,6 +132,34 @@ You can route requests simply by passing the name of the provider in the `X-Agen
 
 ---
 
+## Platform Integrations (n8n, Zapier, Make)
+
+AgentBud is designed to be the perfect companion for no-code and low-code AI automation platforms. Because these platforms often abstract away the LLM calls, you lose visibility into exactly what prompts are being generated and what the models are returning.
+
+By dropping AgentBud between your automation platform and the AI provider, you instantly regain full observability, cryptographic auditing, and cost-control (circuit breaking) without changing a single node in your workflow.
+
+### Using with n8n
+If you use the built-in "OpenAI" or "Anthropic" nodes in n8n:
+1. Open your n8n credentials for the AI provider.
+2. In the **Base URL** field, replace `https://api.openai.com/v1` with your AgentBud proxy address: `http://YOUR_VPS_IP:3000/v1`
+3. *(Optional)* To get structured tracking in your dashboard, use the "HTTP Request" node instead of the native AI node to pass the custom `X-AgentBud-Run-ID` and `X-AgentBud-Workflow` headers.
+
+### Using with Zapier & Make.com
+Since Zapier and Make.com do not let you override the Base URL on their native OpenAI integrations, use the generic **HTTP Request / Webhook** modules:
+
+1. Add an "HTTP" or "Make an API Call" action.
+2. Set the URL to your AgentBud proxy: `http://YOUR_VPS_IP:3000/v1/chat/completions`
+3. Set the Method to `POST`.
+4. Add your headers:
+   - `Authorization: Bearer sk-...`
+   - `X-AgentBud-Run-ID: {{Zapier.TransactionID}}` (Use dynamic variables to group traces!)
+   - `X-AgentBud-Workflow: lead-qualification`
+5. Map your system prompt and user variables into a standard JSON body.
+
+Your automations will proceed normally, but every LLM decision will now be securely logged and auditable in your AgentBud dashboard.
+
+---
+
 ## License
 
 Apache 2.0
