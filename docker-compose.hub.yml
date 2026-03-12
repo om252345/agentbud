@@ -6,7 +6,7 @@
 
 services:
   agentbud:
-    image: agentbud/agentbud:latest
+    image: om252345/agentbud:latest
     ports:
       - "3000:3000"
     environment:

@@ -1,7 +1,7 @@
 # =============================================================================
 # Render Blueprint — One-Click Deploy
 # https://render.com/docs/infrastructure-as-code
-# Deploy: https://render.com/deploy?repo=https://github.com/AgentBud/agentbud
+# Deploy: https://render.com/deploy?repo=https://github.com/om252345/agentbud
 # =============================================================================
 
 services:

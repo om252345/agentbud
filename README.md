@@ -2,8 +2,8 @@
   <h1>🛡️ AgentBud</h1>
   <p><strong>A drop-in observability proxy and tamper-proof audit trail for AI agents.</strong></p>
 
-  [![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/AgentBud/agentbud)
-  [![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/template?template=https://github.com/AgentBud/agentbud)
+  [![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/om252345/agentbud)
+  [![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/template?template=https://github.com/om252345/agentbud)
 </div>
 
 ---
