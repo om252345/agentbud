@@ -1,0 +1,59 @@
+global:
+  hashAlgo: sha256
+  chainHashes: true
+  autoDetectLoops: true
+  provider: ollama # Default provider for all steps
+  crypto:
+    mode: "asymmetric"       # Options: none, simple, asymmetric
+    hashAlgo: "sha256"       # Used in both 'simple' and 'asymmetric' modes
+    signAlgo: "ed25519"      # Only used if mode is 'asymmetric'
+    keyDir: "./keys"
+
+workflows:
+  support-ticket-swarm:
+    description: Triage ticket, search docs, and optionally hand off to refund agent.
+    steps:
+      analyze-intent:
+        stepType: reasoning
+        hashInput: true
+        hashOutput: true
+        redactPII: [email, phone, credit_card]
+        maxRepeats: 5 # Circuit Breaker limit
+
+      deduplication-test:
+        stepType: validation
+        hashInput: true
+        hashOutput: true
+
+      search-internal-kb:
+        stepType: tool-call
+        toolName: pinecone-rag
+        maxRepeats: 3 # Circuit breaker if it gets stuck searching
+
+      handoff-to-billing:
+        stepType: handoff
+        targetAgent: billing-agent
+        hashInput: true
+
+      process-refund:
+        stepType: action
+        humanInTheLoop: true
+        approvalMessage: "Require human click before issuing Stripe refund"
+
+      local-sentiment-check:
+        stepType: reasoning
+        provider: ollama
+        baseUrl: http://192.168.1.100:11434 # Can override the default localhost behavior
+
+  external-test:
+    description: Workflow used for testing multi-provider overrides and passthroughs.
+    steps:
+      try-grok:
+        stepType: external-call
+        provider: openai
+        hashInput: true
+        hashOutput: true
+
+      custom-url:
+        stepType: action
+        baseUrl: http://host.docker.internal:11434

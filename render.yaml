@@ -1,0 +1,26 @@
+# =============================================================================
+# Render Blueprint — One-Click Deploy
+# https://render.com/docs/infrastructure-as-code
+# Deploy: https://render.com/deploy?repo=https://github.com/AgentBud/agentbud
+# =============================================================================
+
+services:
+  - type: web
+    name: agentbud
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: PORT
+        value: "3000"
+      - key: DB_PATH
+        value: /app/data/agentbud.db
+    disk:
+      name: agentbud-data
+      mountPath: /app/data
+      sizeGB: 1
+    healthCheckPath: /api/runs
+
+  - type: redis
+    name: agentbud-redis
+    plan: free
+    ipAllowList: []

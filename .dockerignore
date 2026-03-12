@@ -1,0 +1,15 @@
+node_modules
+*.db
+*.db-shm
+*.db-wal
+keys/
+.git
+.gitignore
+.cursor
+.DS_Store
+tests/
+README.md
+docker-compose*.yml
+render.yaml
+railway.json
+*.md
